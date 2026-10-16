@@ -18,7 +18,7 @@ CREATE TABLE reviews (
 
 -- Seed one restaurant
 INSERT INTO restaurants (id, name, cuisine, area)
-VALUES (1, 'Ludhiana Burrito', 'Indian', 'Sector 32')
+VALUES (1, 'Sainik Sweets', 'Indian', 'Ashok Nagar')
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed three reviews a few days apart so "latest" is meaningful
