@@ -8,6 +8,7 @@ type Item = {
   name: string;
   cuisine: string;
   area: string;
+  type: string;
   averageRating: number | null;
   totalReviews: number;
 };
@@ -37,7 +38,8 @@ export default function Home() {
             <Link key={r.id} href={`/restaurant/${r.id}`} className="mb-3 flex justify-between gap-3 rounded-xl border border-[#e8e8e8] bg-white p-4">
               <div>
                 <h2 className="text-[17px] font-semibold">{r.name}</h2>
-                <p className="mt-0.5 text-sm text-[#696969]">{r.cuisine} · {r.area}</p>
+                <p className="mt-0.5 text-sm text-[#696969]">{r.cuisine} · {r.type}</p>
+                <p className="mt-0.5 text-sm text-[#696969]">{r.area}</p>
                 <p className="mt-1 text-xs text-[#696969]">{r.totalReviews} review{r.totalReviews === 1 ? '' : 's'}</p>
               </div>
               <div>
