@@ -9,6 +9,7 @@ type Data = {
   cuisine: string;
   area: string;
   type: string;
+  image: string;
   averageRating: number | null;
   totalReviews: number;
   latestReview: Review | null;
@@ -41,7 +42,7 @@ export default function RestaurantPage({ params }: { params: Promise<{ id: strin
       </header>
       <main className="p-4">
         <div className="overflow-hidden rounded-xl border border-[#e8e8e8] bg-white">
-          <img src="/dosa.jpg" alt="Masala dosa at Sainik Sweets" className="h-44 w-full object-cover" />
+          <img src={data.image} alt={data.name} className="h-44 w-full object-cover" />
           <div className="p-4 text-center">
           <p className="text-sm text-[#696969]">{data.cuisine} · {data.type}</p>
           <p className="text-sm text-[#696969]">{data.area}</p>
