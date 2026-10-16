@@ -6,7 +6,8 @@ CREATE TABLE restaurants (
   name      TEXT NOT NULL,
   cuisine   TEXT NOT NULL,
   area      TEXT NOT NULL,
-  type      TEXT NOT NULL DEFAULT 'Dine In'
+  type      TEXT NOT NULL DEFAULT 'Dine In',
+  image     TEXT NOT NULL DEFAULT '/dosa.jpg'
 );
 
 CREATE TABLE reviews (
@@ -17,9 +18,10 @@ CREATE TABLE reviews (
   created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Seed one restaurant
-INSERT INTO restaurants (id, name, cuisine, area, type)
-VALUES (1, 'Sainik Sweets', 'Indian', 'Ashok Nagar', 'Dine In')
+-- Seed restaurants (images live in public/)
+INSERT INTO restaurants (id, name, cuisine, area, type, image)
+VALUES (1, 'Sainik Sweets', 'Indian', 'Ashok Nagar', 'Dine In', '/dosa.jpg'),
+       (2, 'Burger Queen', 'American', 'Johnsganj', 'Takeaway', '/burger.jpg')
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed three reviews a few days apart so "latest" is meaningful
