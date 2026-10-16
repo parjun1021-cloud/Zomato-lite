@@ -40,12 +40,15 @@ export default function RestaurantPage({ params }: { params: Promise<{ id: strin
         <h1 className="text-xl font-bold">{data.name}</h1>
       </header>
       <main className="p-4">
-        <div className="rounded-xl border border-[#e8e8e8] bg-white p-4 text-center">
+        <div className="overflow-hidden rounded-xl border border-[#e8e8e8] bg-white">
+          <img src="/dosa.jpg" alt="Masala dosa at Sainik Sweets" className="h-44 w-full object-cover" />
+          <div className="p-4 text-center">
           <p className="text-sm text-[#696969]">{data.cuisine} · {data.type}</p>
           <p className="text-sm text-[#696969]">{data.area}</p>
           {/* THE LINE BELOW prints the average. No calculation anywhere in this file. */}
           <p className="mt-1 text-[42px] font-bold leading-none">{data.averageRating === null ? '0.0' : data.averageRating.toFixed(1)}</p>
           <p className="mt-1 text-sm text-[#696969]">{data.totalReviews} review{data.totalReviews === 1 ? '' : 's'}</p>
+          </div>
         </div>
 
         <div className="mt-3 rounded-xl border border-[#e8e8e8] bg-white p-4 text-center">
