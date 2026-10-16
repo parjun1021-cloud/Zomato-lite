@@ -35,7 +35,9 @@ export default function Home() {
           <p className="py-10 text-center text-[#696969]">No restaurants yet.</p>
         ) : (
           items.map((r) => (
-            <Link key={r.id} href={`/restaurant/${r.id}`} className="mb-3 flex justify-between gap-3 rounded-xl border border-[#e8e8e8] bg-white p-4">
+            <Link key={r.id} href={`/restaurant/${r.id}`} className="mb-3 block overflow-hidden rounded-xl border border-[#e8e8e8] bg-white">
+              <img src="/dosa.jpg" alt="Masala dosa" className="h-36 w-full object-cover" />
+              <div className="flex justify-between gap-3 p-4">
               <div>
                 <h2 className="text-[17px] font-semibold">{r.name}</h2>
                 <p className="mt-0.5 text-sm text-[#696969]">{r.cuisine} · {r.type}</p>
@@ -47,6 +49,7 @@ export default function Home() {
                 <div className={`whitespace-nowrap rounded-lg px-2 py-1 text-sm font-bold text-white ${r.totalReviews ? 'bg-[#24963f]' : 'bg-[#9a9a9a]'}`}>
                   {r.averageRating === null ? '–' : r.averageRating.toFixed(1)} ★
                 </div>
+              </div>
               </div>
             </Link>
           ))
