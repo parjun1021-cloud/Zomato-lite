@@ -5,7 +5,8 @@ CREATE TABLE restaurants (
   id        SERIAL PRIMARY KEY,
   name      TEXT NOT NULL,
   cuisine   TEXT NOT NULL,
-  area      TEXT NOT NULL
+  area      TEXT NOT NULL,
+  type      TEXT NOT NULL DEFAULT 'Dine In'
 );
 
 CREATE TABLE reviews (
@@ -17,8 +18,8 @@ CREATE TABLE reviews (
 );
 
 -- Seed one restaurant
-INSERT INTO restaurants (id, name, cuisine, area)
-VALUES (1, 'Sainik Sweets', 'Indian', 'Ashok Nagar')
+INSERT INTO restaurants (id, name, cuisine, area, type)
+VALUES (1, 'Sainik Sweets', 'Indian', 'Ashok Nagar', 'Dine In')
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed three reviews a few days apart so "latest" is meaningful
