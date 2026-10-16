@@ -16,12 +16,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'rating must be an integer from 1 to 5' }, { status: 400 });
   }
 
-  // 2. comment is a non-empty string after trimming whitespace
+  // 2. comment is optional — trim if present, else empty string
   const commentRaw = b['comment'];
   const comment = typeof commentRaw === 'string' ? commentRaw.trim() : '';
-  if (!comment) {
-    return NextResponse.json({ error: 'comment must not be empty' }, { status: 400 });
-  }
 
   // 3. restaurantId refers to a restaurant that actually exists (database lookup)
   const restaurantId = b['restaurantId'];
