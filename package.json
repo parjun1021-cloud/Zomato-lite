@@ -1,0 +1,12 @@
+{
+  "name": "zomato-lite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zomato Lite - reviews only",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0"
+  }
+}
