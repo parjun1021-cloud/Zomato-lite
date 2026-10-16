@@ -8,11 +8,11 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
     return NextResponse.json({ error: 'restaurant does not exist' }, { status: 404 });
   }
 
-  const restaurants = await sql`SELECT id, name, cuisine, area FROM restaurants WHERE id = ${restaurantId}`;
+  const restaurants = await sql`SELECT id, name, cuisine, area, type FROM restaurants WHERE id = ${restaurantId}`;
   if (restaurants.length === 0) {
     return NextResponse.json({ error: 'restaurant does not exist' }, { status: 404 });
   }
-  const r = restaurants[0] as { id: number; name: string; cuisine: string; area: string };
+  const r = restaurants[0] as { id: number; name: string; cuisine: string; area: string; type: string };
 
   // Raw SQL only: AVG and COUNT, no stored average anywhere.
   const stats = await sql`
@@ -35,6 +35,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
       name: r.name,
       cuisine: r.cuisine,
       area: r.area,
+      type: r.type,
       averageRating: null,
       totalReviews: 0,
       latestReview: null,
@@ -49,6 +50,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
     name: r.name,
     cuisine: r.cuisine,
     area: r.area,
+    type: r.type,
     averageRating: s.avg,
     totalReviews: s.cnt,
     latestReview: toApi(latest),
