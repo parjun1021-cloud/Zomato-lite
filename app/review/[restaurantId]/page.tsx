@@ -20,7 +20,7 @@ export default function ReviewPage({ params }: { params: Promise<{ restaurantId:
       .catch(() => {});
   }, [restaurantId]);
 
-  const canSubmit = rating >= 1 && comment.trim().length > 0 && !sending;
+  const canSubmit = rating >= 1 && !sending;
 
   async function submit() {
     setSending(true);
@@ -55,7 +55,7 @@ export default function ReviewPage({ params }: { params: Promise<{ restaurantId:
             ))}
           </div>
           <textarea value={comment} onChange={(e) => setComment(e.target.value)}
-            placeholder="Write a comment" rows={3}
+            placeholder="Write a comment (optional)" rows={3}
             className="mt-4 w-full rounded-lg border border-[#e8e8e8] p-2" />
           <button type="button" disabled={!canSubmit} onClick={submit}
             className="mt-3 w-full rounded-lg bg-[#e23744] py-3 font-semibold text-white disabled:opacity-40">
