@@ -4,12 +4,10 @@ import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-type Restaurant = { name: string; cuisine: string; area: string };
-
 export default function ReviewPage({ params }: { params: Promise<{ restaurantId: string }> }) {
   const { restaurantId } = use(params);
   const router = useRouter();
-  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+  const [name, setName] = useState('');
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [error, setError] = useState('');
@@ -18,7 +16,7 @@ export default function ReviewPage({ params }: { params: Promise<{ restaurantId:
   useEffect(() => {
     fetch(`/api/restaurants/${restaurantId}`)
       .then((r) => (r.ok ? r.json() : null))
-      .then((d) => d && setRestaurant({ name: d.name, cuisine: d.cuisine, area: d.area }))
+      .then((d) => d && setName((d as { name: string }).name))
       .catch(() => {});
   }, [restaurantId]);
 
@@ -34,7 +32,6 @@ export default function ReviewPage({ params }: { params: Promise<{ restaurantId:
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      // Display what the backend said, do not invent our own message.
       setError((data as { error?: string }).error || 'Could not submit');
       setSending(false);
       return;
@@ -43,48 +40,30 @@ export default function ReviewPage({ params }: { params: Promise<{ restaurantId:
   }
 
   return (
-    <main className="mx-auto w-full max-w-[560px] px-6 py-10">
-      <p className="text-sm text-[#6b6660]">Reviewing</p>
-      <h1 className="mt-1 text-2xl font-semibold">{restaurant ? restaurant.name : '…'}</h1>
-
-      <div className="mt-8 flex gap-2" role="radiogroup" aria-label="Pick a rating">
-        {[1, 2, 3, 4, 5].map((n) => (
-          <button
-            key={n}
-            type="button"
-            onClick={() => setRating(n)}
-            aria-label={`${n} star`}
-            className={`h-11 w-11 rounded-lg border text-xl ${n <= rating ? 'border-[#b3541e] bg-[#b3541e] text-white' : 'border-[#e8e2d9] bg-white text-[#1c1a17]'}`}
-          >
-            ★
+    <div className="mx-auto min-h-screen w-full max-w-[480px] bg-[#f8f8f8]">
+      <header className="sticky top-0 z-10 flex items-center gap-3 bg-[#e23744] px-4 py-4 text-white">
+        <Link href={`/restaurant/${restaurantId}`} aria-label="Back">←</Link>
+        <h1 className="text-xl font-bold">{name || 'Review'}</h1>
+      </header>
+      <main className="p-4">
+        <div className="rounded-xl border border-[#e8e8e8] bg-white p-4 text-center">
+          <p className="font-semibold">Tap a star</p>
+          <div className="mt-2 flex justify-center gap-1">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <button key={n} type="button" onClick={() => setRating(n)} aria-label={`${n} star`}
+                className={`px-1 text-4xl leading-none ${n <= rating ? 'text-[#f5a623]' : 'text-[#d4d4d4]'}`}>★</button>
+            ))}
+          </div>
+          <textarea value={comment} onChange={(e) => setComment(e.target.value)}
+            placeholder="Write a comment" rows={3}
+            className="mt-4 w-full rounded-lg border border-[#e8e8e8] p-2" />
+          <button type="button" disabled={!canSubmit} onClick={submit}
+            className="mt-3 w-full rounded-lg bg-[#e23744] py-3 font-semibold text-white disabled:opacity-40">
+            {sending ? 'Submitting…' : 'Submit review'}
           </button>
-        ))}
-      </div>
-
-      <textarea
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        placeholder="Write your comment"
-        rows={4}
-        className="mt-6 w-full rounded-lg border border-[#e8e2d9] bg-white p-3"
-      />
-
-      <button
-        type="button"
-        disabled={!canSubmit}
-        onClick={submit}
-        className="mt-4 w-full rounded-lg bg-[#b3541e] py-3 font-medium text-white disabled:opacity-40"
-      >
-        {sending ? 'Submitting…' : 'Submit'}
-      </button>
-
-      {error ? <p className="mt-3 text-sm text-red-700">{error}</p> : null}
-
-      <p className="mt-6 text-sm">
-        <Link className="underline" href={`/restaurant/${restaurantId}`}>
-          Back to restaurant
-        </Link>
-      </p>
-    </main>
+          {error ? <p className="mt-2 text-sm text-red-700">{error}</p> : null}
+        </div>
+      </main>
+    </div>
   );
 }
