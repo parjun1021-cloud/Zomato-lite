@@ -9,6 +9,7 @@ type Item = {
   cuisine: string;
   area: string;
   type: string;
+  image: string;
   averageRating: number | null;
   totalReviews: number;
 };
@@ -36,7 +37,7 @@ export default function Home() {
         ) : (
           items.map((r) => (
             <Link key={r.id} href={`/restaurant/${r.id}`} className="mb-3 block overflow-hidden rounded-xl border border-[#e8e8e8] bg-white">
-              <img src="/dosa.jpg" alt="Masala dosa" className="h-36 w-full object-cover" />
+              <img src={r.image} alt={r.name} className="h-36 w-full object-cover" />
               <div className="flex justify-between gap-3 p-4">
               <div>
                 <h2 className="text-[17px] font-semibold">{r.name}</h2>
