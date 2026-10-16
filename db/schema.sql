@@ -21,7 +21,8 @@ CREATE TABLE reviews (
 -- Seed restaurants (images live in public/)
 INSERT INTO restaurants (id, name, cuisine, area, type, image)
 VALUES (1, 'Sainik Sweets', 'Indian', 'Ashok Nagar', 'Dine In', '/dosa.jpg'),
-       (2, 'Burger Queen', 'American', 'Johnsganj', 'Takeaway', '/burger.jpg')
+       (2, 'Burger Queen', 'American', 'Johnsganj', 'Takeaway', '/burger.jpg'),
+       (3, 'Pandey Dhabha', 'Indian', 'George Town', 'Dine In', '/mushroom.jpg')
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed three reviews a few days apart so "latest" is meaningful
